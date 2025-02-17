@@ -1,0 +1,15 @@
+import SearchCard from "../../../SharedComponents/Search";
+import Status from "../../../SharedComponents/Status";
+
+const StatusSearchCard = () => {
+  return (
+    <div className="w-full flex justify-end items-center gap-4 border-b border-b-gray-300 py-2">
+      <SearchCard height="40px" width="330px" isApplyBorder={true} />
+      <Status text="25 Pending" bgColor="#fef9c3" textColor="#854d0e" />
+      <Status text="142 Approved" bgColor="#dcfce7" textColor="#166534" />
+      <Status text="8 Rejected" bgColor="#fee2e2" textColor="#991b1b" />
+    </div>
+  );
+};
+
+export default StatusSearchCard;

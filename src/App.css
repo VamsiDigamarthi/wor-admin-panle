@@ -1,0 +1,11 @@
+.heading-title {
+  @apply text-lg font-[600] text-primary;
+}
+
+.black-heading {
+  @apply text-lg font-semibold text-black;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
