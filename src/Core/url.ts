@@ -2,16 +2,15 @@ import axios from "axios";
 import { errorMsgApi } from "./toast";
 
 export const API = axios.create({
-  baseURL: "http://localhost:5051",
+  baseURL: "http://192.168.1.12:5051",
 });
 
-export const imageUrl = "http://localhost:5051";
+export const imageUrl = "http://192.168.1.12:5051";
 
 const useGetUserToken = (): string | null => {
   return localStorage.getItem("token") || null;
 };
 
-// Request interceptor for adding token and setting dynamic headers
 API.interceptors.request.use(
   (config) => {
     const token = useGetUserToken();

@@ -7,6 +7,8 @@ type StatucChangBtnTypes = {
   iconType: string;
   textColor?: string;
   isApplyBorder?: boolean;
+  onClick?: () => void;
+  cursorDisable?: boolean;
 };
 const StatucChangBtn: FC<StatucChangBtnTypes> = ({
   bgColor,
@@ -14,6 +16,8 @@ const StatucChangBtn: FC<StatucChangBtnTypes> = ({
   iconType,
   isApplyBorder,
   textColor = "#fff",
+  onClick,
+  cursorDisable = false,
 }) => {
   const icon =
     iconType === "tick" ? (
@@ -28,9 +32,11 @@ const StatucChangBtn: FC<StatucChangBtnTypes> = ({
     <button
       style={{
         border: isApplyBorder ? "1px solid lightgray" : "none",
-        backgroundColor: bgColor,
+        backgroundColor: cursorDisable ? "gray" : bgColor,
+        cursor: cursorDisable ? "not-allowed" : "pointer",
       }}
       className="w-[130px] h-[40px] flex items-center justify-center px-2 bg-green-700 gap-2 rounded-md"
+      onClick={onClick}
     >
       {icon}
       <p style={{ color: textColor }} className="text-white font-[600]">

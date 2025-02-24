@@ -4,25 +4,16 @@ import { CircleCheck, UserCheck, Users } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../Redux/store";
 
-type ManagerDashPercentageType = {
-  worUserCount: {
-    approvedUsers: number;
-    pendingUsers: number;
-  };
-};
-
-const ManagerDashPercentage: FC<ManagerDashPercentageType> = ({
-  worUserCount,
-}) => {
+const ManagerDashPercentage: FC = () => {
   const { userProfile } = useSelector((state: RootState) => state.profile);
-
+  const { verifiedUsers } = useSelector((state: RootState) => state.worUser);
   return (
     <div className="w-full flex justify-center items-center flex-wrap gap-8">
       <PercentageCard
         bgColor="#DCFCE7"
         title={`Approved ${userProfile?.whichType}`}
         percentage={12}
-        count={worUserCount?.approvedUsers}
+        count={verifiedUsers?.approvedUsers}
       >
         <UserCheck size={20} color="#16A34A" />
       </PercentageCard>
@@ -30,7 +21,7 @@ const ManagerDashPercentage: FC<ManagerDashPercentageType> = ({
         bgColor="#DBEAFE"
         title={`Pending ${userProfile?.whichType}`}
         percentage={12}
-        count={worUserCount.pendingUsers}
+        count={verifiedUsers.pendingUsers}
       >
         <CircleCheck size={20} color="#2563EB" />
       </PercentageCard>

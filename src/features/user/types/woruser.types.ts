@@ -1,103 +1,3 @@
-// export interface WorUser {
-//   docsNumber: {
-//     newAadharNumber: string | null;
-//     newPanNumber: string | null;
-//     newRcNumber: string | null;
-//     newLicenNumber: string | null;
-//     dob: string | null;
-//   };
-//   adminDocsVerified: {
-//     adminAadharVerified: string;
-//     adminLicenVerified: string;
-//     adminRcVerified: string;
-//   };
-//   activeService: string;
-//   _id: string;
-//   name: string;
-//   mobile: string;
-//   role: string;
-//   onDuty: boolean;
-//   holdingCaptain: boolean;
-//   profilePic: string | null;
-//   license: string | null;
-//   licenseBack: string | null;
-//   pan: string | null;
-//   panBack: string | null;
-//   adhar: string | null;
-//   adharBack: string | null;
-//   rc: string | null;
-//   rcBack: string | null;
-//   captainVehicleType: string | null;
-//   aadharCardDetails: {
-//     fullName: string;
-//     dob: string;
-//     gender: string;
-//     aadhaarNumber: string;
-//     careOf: string | null;
-//     address: {
-//       country: string;
-//       dist: string;
-//       state: string;
-//       mandal: string;
-//       village: string;
-//       house: string;
-//       _id: string;
-//     };
-//     aadharImage: string;
-//   };
-//   aadharCarVerificaation: boolean;
-//   panCardVerified: boolean;
-//   panCardDetails: {
-//     pan: string | null;
-//     name: string | null;
-//     firstName: string | null;
-//     middleName: string | null;
-//     lastName: string | null;
-//     gender: string | null;
-//     dob: string | null;
-//   };
-//   licenseCardVerified: boolean;
-//   licenseCardDetails: {
-//     license_number: string | null;
-//     state: string | null;
-//     name: string | null;
-//     permanent_address: string | null;
-//     temporary_address: string | null;
-//     dob: string | null;
-//   };
-//   captainLocation: {
-//     type: string;
-//     coordinates: [number, number]; // Tuple for latitude and longitude
-//   };
-
-//   email: string | null;
-//   signUpDateAndTime: Date;
-//   address: string | null;
-//   fbtoken: string | null;
-//   userVerified: boolean;
-//   emergencyContact: {
-//     name: string | null;
-//     mobile: string | null;
-//     option: string[];
-//     _id: string;
-//   }[];
-//   vehicleName: string | null;
-//   vehicleNumber: string | null;
-//   rcCardVerified: boolean;
-//   rcNumber: string | null;
-//   rcCardDetails: {
-//     type: {
-//       rc_number: string | null;
-//       owner_name: string | null;
-//       permanent_address: string | null;
-//       present_address: string | null;
-//       maker_model: string | null;
-//       color: string | null;
-//       registered_at: string | null;
-//     };
-//   };
-// }
-
 export interface WorUser {
   _id: string;
   name: string;
@@ -112,8 +12,6 @@ export interface WorUser {
   panBack: string | null;
   adhar: string | null;
   adharBack: string | null;
-  rc: string | null;
-  rcBack: string | null;
   userVerified: boolean;
   emergencyContact: {
     name: string | null;
@@ -123,14 +21,86 @@ export interface WorUser {
   }[];
   docsNumber: {
     newAadharNumber: string | null;
-    newPanNumber: string | null;
-    newRcNumber: string | null;
     newLicenNumber: string | null;
     dob: string | null;
   };
   adminDocsVerified: {
     adminAadharVerified: string;
     adminLicenVerified: string;
-    adminRcVerified: string;
+  };
+  captainLocation: {
+    type: string;
+    coordinates: [number, number];
+  };
+  deviceId: string;
+  ownRefCode: string;
+  referalCode: string;
+  accountDeleteStatus: string;
+  deletionReason: string | null;
+  accountDeleteRequestDate: string | null;
+  mpin: string | null;
+
+  aadharCarVerificaation: boolean;
+
+  email: string;
+  signUpDateAndTime: string;
+  scheduleOrderCount: number;
+  walletBalance: number;
+  languages: string[];
+  donationActive: boolean;
+  activeService: string | null;
+  services: {
+    serviceType: string;
+    rcVerificationStatuc: string;
+    rcNumber: string;
+    rcFrontImage: string;
+    rcBackImage: string;
+
+    fitUpTo: string;
+    registrationDate: string;
+    ownerName: string;
+    fatherName: string;
+    presentAddress: string;
+    permanentAddress: string;
+    makerDescription: string;
+    makerModel: string;
+    fuelType: string;
+    color: string;
+    registeredAt: string;
+    _id: string;
+  }[];
+  fbtoken: string;
+  averageRating: number;
+  aadharCardDetails: {
+    fullName: string | null;
+    dob: string | null;
+    gender: string | null;
+    aadhaarNumber: string | null;
+    careOf: string | null;
+    address: {
+      country: string | null;
+      dist: string | null;
+      state: string | null;
+      mandal: string | null;
+      village: string | null;
+      house: string | null;
+    };
+    aadharImage: string | null;
+  } | null;
+
+  panCardDetails: {
+    fullName: string | null;
+    panNumber: string | null;
+  };
+
+  licenseCardDetails: {
+    licenseNumber: string | null;
+    state: string | null;
+    name: string | null;
+    permanentAddress: string | null;
+    temporaryAddress: string | null;
+    dob: string | null;
+    gender: string | null;
+    profileImage: string | null;
   };
 }

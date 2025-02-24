@@ -58,6 +58,8 @@ export const useLogicScreenHook = () => {
         navigate("/manager-dashboard");
       } else if (role === "superadmin") {
         navigate("/super-admin-dashboard");
+      } else if (role === "support") {
+        navigate("/support-dashboard");
       }
       //  else {
       //   navigate("/default-dashboard");

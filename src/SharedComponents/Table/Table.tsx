@@ -33,7 +33,7 @@ const Table = <T extends Record<string, any>>({
         className="w-full rounded-lg overflow-hidden shadow-custom bg-white mb-4"
       >
         <TableHeader columns={columns} />
-        {tableData.map((dataRow, key) => (
+        {tableData?.map((dataRow, key) => (
           <TableRow key={key} dataRow={dataRow} columns={columns} />
         ))}
       </div>

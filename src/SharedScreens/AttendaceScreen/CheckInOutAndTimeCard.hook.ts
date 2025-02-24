@@ -41,6 +41,7 @@ export const useCheckInOutAndTimeCardHook = () => {
     if (storedDate !== todayDate) {
       localStorage.removeItem("checkInTime");
       localStorage.removeItem("checkOutTime");
+      localStorage.removeItem("attendanceDate");
       setCheckInTime(null);
       setCheckOutTime(null);
       setIsCheckInDisabled(false);

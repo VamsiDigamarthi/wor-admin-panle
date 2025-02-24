@@ -14,7 +14,7 @@ const SearchCard: FC<SearchCardType> = ({
 }) => {
   return (
     <button
-      style={{ width: width, height }}
+      style={{ width: width, minHeight: height }}
       className={`bg-white flex justify-between items-center px-4 rounded-md shadow-custom ${
         isApplyBorder && "border border-gray-400"
       }`}

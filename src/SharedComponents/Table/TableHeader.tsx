@@ -17,7 +17,7 @@ const TableHeader: FC<TableHeaderProps<Record<string, unknown>>> = ({
 }) => {
   return (
     <div className="px-3 py-5 w-full text-[1.2vw] font-[600] flex items-center h-[42px] bg-[#f7f7f7] overflow-hidden">
-      {columns.map((column, key) => (
+      {columns?.map((column, key) => (
         <span
           className="text-gray-800 text-base"
           key={key}

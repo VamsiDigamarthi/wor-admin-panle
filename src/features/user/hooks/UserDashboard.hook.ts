@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWorUsers } from "../redux/worUserSlice";
+import { fetchWorUsers, setVerifiedUsers } from "../redux/worUserSlice";
 import { AppDispatch, RootState } from "../../../Redux/store";
 
 export const useUserDashboardHook = () => {
@@ -8,11 +8,7 @@ export const useUserDashboardHook = () => {
 
   const { worUsers } = useSelector((state: RootState) => state.worUser);
   const { userProfile } = useSelector((state: RootState) => state.profile);
-
-  const [worUserCount, setWorUserCount] = useState({
-    approvedUsers: 0,
-    pendingUsers: 0,
-  });
+  const v = "";
 
   useEffect(() => {
     dispatch(fetchWorUsers());
@@ -27,11 +23,13 @@ export const useUserDashboardHook = () => {
       (each) => !each.userVerified && each.role === userProfile?.whichType
     )?.length;
 
-    setWorUserCount({
-      approvedUsers: apprivedRiders,
-      pendingUsers: pendingRiders,
-    });
-  }, [worUsers, userProfile?.whichType]);
+    dispatch(
+      setVerifiedUsers({
+        approvedUsers: apprivedRiders,
+        pendingUsers: pendingRiders,
+      })
+    );
+  }, [worUsers, dispatch, userProfile?.whichType]);
 
   useEffect(() => {
     if (worUsers && worUsers.length > 0) {
@@ -39,5 +37,5 @@ export const useUserDashboardHook = () => {
     }
   }, [calculateUserApprovedCount, worUsers]);
 
-  return { worUsers, worUserCount };
+  return { v };
 };

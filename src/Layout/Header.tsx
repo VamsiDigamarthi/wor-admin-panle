@@ -49,8 +49,10 @@ const Header = () => {
       navigationTextByRole: {
         admin: "/admin-user-verification",
         support: "/support-user-verification",
+        manager: "/user-verification",
+        superadmin: "/user-verification",
       },
-      roles: ["admin", "support"],
+      roles: ["admin", "support", "manager"],
     },
     {
       label: "Payment Verification",
