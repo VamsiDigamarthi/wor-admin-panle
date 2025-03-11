@@ -132,6 +132,42 @@ const UserVerificationRightSide = () => {
                 : false
             }
           />
+          <DocImage
+            lable="Vehicle Front Images"
+            img={worUser?.services?.[0]?.vehicleFrontImage ?? null}
+            isVerified={
+              worUser?.services?.[0]?.vehicleImageVerification === "verified"
+                ? true
+                : false
+            }
+            handleDocsPreviewModal={() =>
+              handleDocsPreviewModal("Vehicle Image")
+            }
+            selectedLabel={selectedLabel}
+            isDisplayRejectTag={
+              worUser?.services?.[0]?.vehicleImageVerification === "rejected"
+                ? true
+                : false
+            }
+          />
+          <DocImage
+            lable="Vehicle Back Images"
+            img={worUser?.services?.[0]?.vehicleBackImage ?? null}
+            isVerified={
+              worUser?.services?.[0]?.vehicleImageVerification === "verified"
+                ? true
+                : false
+            }
+            handleDocsPreviewModal={() =>
+              handleDocsPreviewModal("Vehicle Image")
+            }
+            selectedLabel={selectedLabel}
+            isDisplayRejectTag={
+              worUser?.services?.[0]?.vehicleImageVerification === "rejected"
+                ? true
+                : false
+            }
+          />
         </div>
 
         <h3 className="font-semibold text-lg">Audit Log</h3>

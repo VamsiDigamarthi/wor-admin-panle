@@ -3,7 +3,10 @@ import { AppDispatch, RootState } from "../../../Redux/store";
 import { useCallback, useEffect, useState } from "react";
 import { handleRejectDocsApi } from "../services/docsVerifiedServ";
 import { openCloseModalFunc } from "../../../Redux/modalFeatureSlice";
-import { setWorUser } from "../../../features/user/redux/worUserSlice";
+import {
+  fetchWorUsers,
+  setWorUser,
+} from "../../../features/user/redux/worUserSlice";
 
 export const useDocsImageCompareModalHook = ({
   lable,
@@ -17,10 +20,23 @@ export const useDocsImageCompareModalHook = ({
   const [docImage, setDocImage] = useState<{
     frontImage: string | null;
     backImage: string | null;
+    leftImage?: string | null;
+    rightImage?: string | null;
+    helmetImage?: string | null;
+    numberImage?: string | null;
   }>({
     frontImage: "",
     backImage: "",
+    leftImage: "",
+    rightImage: "",
+    helmetImage: "",
+    numberImage: "",
   });
+
+  console.log(
+    "worUser?.services?.[0]?.rcBackImage",
+    worUser?.services?.[0]?.rcBackImage
+  );
 
   const handleFilterImages = useCallback(() => {
     switch (lable) {
@@ -40,6 +56,19 @@ export const useDocsImageCompareModalHook = ({
         setDocImage({
           frontImage: worUser?.services?.[0]?.rcFrontImage ?? null,
           backImage: worUser?.services?.[0]?.rcBackImage ?? null,
+        });
+        break;
+
+      case "Vehicle Image":
+        setDocImage({
+          frontImage: worUser?.services?.[0]?.vehicleFrontImage ?? null,
+          backImage: worUser?.services?.[0]?.vehicleBackImage ?? null,
+          leftImage: worUser?.services?.[0]?.vehicleLeftImage ?? null,
+
+          rightImage: worUser?.services?.[0]?.vehicleRightImage ?? null,
+
+          helmetImage: worUser?.services?.[0]?.vehicleHelmetImage ?? null,
+          numberImage: worUser?.services?.[0]?.vehicleNumberPlate ?? null,
         });
         break;
       default:
@@ -65,6 +94,8 @@ export const useDocsImageCompareModalHook = ({
         ? "aadhar"
         : lable === "Driving License"
         ? "dl"
+        : lable === "Vehicle Image"
+        ? "Vehicle Image"
         : "RC";
 
     const data = await handleRejectDocsApi({
@@ -102,6 +133,8 @@ export const useDocsImageCompareModalHook = ({
         ? "aadhar"
         : lable === "Driving License"
         ? "dl"
+        : lable === "Vehicle Image"
+        ? "Vehicle Image"
         : "RC";
 
     const data = await handleRejectDocsApi({
@@ -110,15 +143,16 @@ export const useDocsImageCompareModalHook = ({
       status: "rejected",
     });
     if (data) {
+      dispatch(fetchWorUsers());
       dispatch(openCloseModalFunc());
 
       if (docsType === "aadhar") {
-        worUser.adminDocsVerified.adminAadharVerified = "verified";
+        worUser.adminDocsVerified.adminAadharVerified = "rejected";
       } else if (docsType === "dl") {
-        worUser.adminDocsVerified.adminLicenVerified = "verified";
+        worUser.adminDocsVerified.adminLicenVerified = "rejected";
       } else {
         if (worUser?.services && worUser.services?.[0]) {
-          worUser.services[0].rcVerificationStatuc = "verified";
+          worUser.services[0].rcVerificationStatuc = "rejected";
         }
       }
       dispatch(setWorUser(worUser));

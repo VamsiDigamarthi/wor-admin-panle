@@ -3,7 +3,7 @@ import { API } from "../../../Core/url";
 import { errorMsgApi } from "../../../Core/toast";
 
 const surePassApiKay =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczOTg3MDgwNSwianRpIjoiMTdmMWFmZTAtZDljNC00MjQ4LTg4YjctMWM1MjhlZDk5NjcwIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2Lm51aHZpbjAyQHN1cmVwYXNzLmlvIiwibmJmIjoxNzM5ODcwODA1LCJleHAiOjE3NDA3MzQ4MDUsImVtYWlsIjoibnVodmluMDJAc3VyZXBhc3MuaW8iLCJ0ZW5hbnRfaWQiOiJtYWluIiwidXNlcl9jbGFpbXMiOnsic2NvcGVzIjpbInVzZXIiXX19.-rHUIelGPcvsTwbM2wvoVPUYbaRbZcPx0PpGcWqHaX4";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MTU5NzI0OCwianRpIjoiNjcwNGEyZGItM2FlYi00MWQyLThjYjQtODU4NGM1Mjg0NDUzIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2Lm51aHZpbjAyQHN1cmVwYXNzLmlvIiwibmJmIjoxNzQxNTk3MjQ4LCJleHAiOjE3NDI0NjEyNDgsImVtYWlsIjoibnVodmluMDJAc3VyZXBhc3MuaW8iLCJ0ZW5hbnRfaWQiOiJtYWluIiwidXNlcl9jbGFpbXMiOnsic2NvcGVzIjpbInVzZXIiXX19.GwWgvk34txmEMdoS5I43NoU3-_FMpY0nla8NFtnm484";
 
 export const handleRejectDocsApi = async ({
   id,
@@ -95,6 +95,8 @@ async function somethingRcData({
   userId,
   rcNumber,
 }: somethingRcDataType) {
+  console.log("own server fetch");
+
   try {
     await API.patch(`/captain/rc-details-update/${userId}/${rcNumber}`, {
       data,
