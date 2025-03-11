@@ -19,6 +19,11 @@ const DocsModalLeft: FC<DocsModalLeftType> = ({ docImage, lable }) => {
     handleSetZoomLevel,
     zoomLevel,
   } = useDocsModalLeftHook();
+  // console.log(
+  //   "${imageUrl}/${docImage?.frontImage}",
+  //   `${imageUrl}/${docImage?.frontImage} `
+  // );
+
   return (
     <div className="w-[40%] h-full flex flex-col justify-center items-center gap-4 overflow-y-scroll">
       {!zoom && (

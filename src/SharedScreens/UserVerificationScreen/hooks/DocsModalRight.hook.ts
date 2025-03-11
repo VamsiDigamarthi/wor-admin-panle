@@ -18,17 +18,16 @@ export const useDocsModalRightHook = ({ lable }: { lable: string | null }) => {
 
   // const aadharCardDetails = () => {};
   const rcCardDetails = async () => {
-    if (worUser && !worUser?.services?.[0]?.ownerName) {
-      console.log("---------------rc -------");
-
-      const rcDetailsResponse = await fetchRcDataApi({
-        rcNumber: worUser?.services?.[0]?.rcNumber,
-        userId: worUser?._id ?? null,
-      });
-      if (rcDetailsResponse) {
-        dispatch(fetchWorUsers());
-      }
-    }
+    // if (worUser && !worUser?.services?.[0]?.ownerName) {
+    //   console.log("---------------rc -------");
+    //   const rcDetailsResponse = await fetchRcDataApi({
+    //     rcNumber: worUser?.services?.[0]?.rcNumber,
+    //     userId: worUser?._id ?? null,
+    //   });
+    //   if (rcDetailsResponse) {
+    //     dispatch(fetchWorUsers());
+    //   }
+    // }
   };
 
   const dlDetails = async () => {

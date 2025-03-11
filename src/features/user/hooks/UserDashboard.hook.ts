@@ -8,7 +8,7 @@ export const useUserDashboardHook = () => {
 
   const { worUsers } = useSelector((state: RootState) => state.worUser);
   const { userProfile } = useSelector((state: RootState) => state.profile);
-  const v = "";
+  // const v = "";
 
   useEffect(() => {
     dispatch(fetchWorUsers());
@@ -37,5 +37,5 @@ export const useUserDashboardHook = () => {
     }
   }, [calculateUserApprovedCount, worUsers]);
 
-  return { v };
+  // return { v };
 };

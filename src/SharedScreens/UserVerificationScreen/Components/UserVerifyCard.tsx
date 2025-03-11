@@ -7,7 +7,7 @@ import UserVerificationRightSide from "./UserVerificationRightSide";
 
 const UserVerifyCard = () => {
   return (
-    <div className="w-full flex flex-col gap-8 items-start p-6 py-9 bg-white rounded-md shadow-custom h-[1100px]">
+    <div className="w-full flex flex-col gap-8 items-start p-6 py-9 bg-white rounded-md shadow-custom h-[1300px]">
       <StatusSearchCard />
       <div className="flex gap-4 w-full h-full ">
         <UserVerificationLeftSide />

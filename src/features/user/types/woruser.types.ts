@@ -1,3 +1,5 @@
+type StatusCard = "pending" | "initial" | "rejected" | "verified";
+
 export interface WorUser {
   _id: string;
   name: string;
@@ -68,6 +70,15 @@ export interface WorUser {
     color: string;
     registeredAt: string;
     _id: string;
+
+    // vehicle image
+    vehicleFrontImage: string | null;
+    vehicleBackImage: string | null;
+    vehicleRightImage: string | null;
+    vehicleLeftImage: string | null;
+    vehicleNumberPlate: string | null;
+    vehicleHelmetImage: string | null;
+    vehicleImageVerification: StatusCard | null;
   }[];
   fbtoken: string;
   averageRating: number;
