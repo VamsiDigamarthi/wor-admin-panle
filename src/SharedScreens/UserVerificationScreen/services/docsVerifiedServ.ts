@@ -3,7 +3,7 @@ import { API } from "../../../Core/url";
 import { errorMsgApi } from "../../../Core/toast";
 
 const surePassApiKay =
-  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MTU5NzI0OCwianRpIjoiNjcwNGEyZGItM2FlYi00MWQyLThjYjQtODU4NGM1Mjg0NDUzIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2Lm51aHZpbjAyQHN1cmVwYXNzLmlvIiwibmJmIjoxNzQxNTk3MjQ4LCJleHAiOjE3NDI0NjEyNDgsImVtYWlsIjoibnVodmluMDJAc3VyZXBhc3MuaW8iLCJ0ZW5hbnRfaWQiOiJtYWluIiwidXNlcl9jbGFpbXMiOnsic2NvcGVzIjpbInVzZXIiXX19.GwWgvk34txmEMdoS5I43NoU3-_FMpY0nla8NFtnm484";
+  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczODczOTM2NCwianRpIjoiNDQwNjBkNWMtODA5NC00MTYxLWEyODktMTQ5M2JmOGNhNjQxIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2Lm51aHZpbjAyQHN1cmVwYXNzLmlvIiwibmJmIjoxNzM4NzM5MzY0LCJleHAiOjIzNjk0NTkzNjQsImVtYWlsIjoibnVodmluMDJAc3VyZXBhc3MuaW8iLCJ0ZW5hbnRfaWQiOiJtYWluIiwidXNlcl9jbGFpbXMiOnsic2NvcGVzIjpbInVzZXIiXX19.FKrt3pav4Ls7zcOojQ51GijcW-YImN62xNhkx2K_4uY";
 
 export const handleRejectDocsApi = async ({
   id,
@@ -120,7 +120,7 @@ export const fetchRcDataApi = async ({
 
   try {
     const response = await axios.post(
-      "https://sandbox.surepass.io/api/v1/rc/rc-full",
+      "https://kyc-api.surepass.io/api/v1/rc/rc-full",
       {
         id_number: rcNumber,
       },
@@ -189,11 +189,11 @@ export const fetchDrivingLinces = async ({
   userId: string | null;
 }) => {
   try {
-    console.log("---", licNume);
+    console.log("-------------------------------", licNume);
     console.log(dob);
 
     const response = await axios.post(
-      "https://sandbox.surepass.io/api/v1/driving-license/driving-license",
+      "https://kyc-api.surepass.io/api/v1/driving-license/driving-license",
       {
         id_number: licNume,
         dob: dob,
@@ -212,6 +212,7 @@ export const fetchDrivingLinces = async ({
 
     return true;
   } catch (error) {
+    console.log(error.response?.data?.message, "message");
     errorMsgApi(
       error?.response?.data?.message || "failde to upload DL Details"
     );
