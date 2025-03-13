@@ -3,6 +3,7 @@ import { FC } from "react";
 export type DetailsCardType = {
   label: string | null;
   value: string | null;
+  index?: number;
 };
 
 const DetailsCard: FC<DetailsCardType> = ({ label, value }) => {

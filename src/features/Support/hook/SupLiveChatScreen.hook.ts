@@ -6,6 +6,11 @@ import { useSocket } from "../../../Layout/SocketContext";
 
 import io, { Socket } from "socket.io-client";
 import { imageUrl } from "../../../Core/url";
+import {
+  handleSendImage,
+  handleUnreadMessage,
+} from "../services/supportchat.ser";
+import { updateChatUnreadCount } from "../redux/unreadMessages";
 
 export const useSupLiveChatScreenHook = () => {
   const { userProfile } = useSelector((state: RootState) => state.profile);
@@ -49,21 +54,53 @@ export const useSupLiveChatScreenHook = () => {
       }
     );
 
-    if (socket && isConnected && userProfile) {
-      socket.emit("support-real-notification", {
-        newUserId: userProfile?._id,
-      });
-    }
+    // if (socket && isConnected && userProfile) {
+    //   socket.emit("support-real-notification", {
+    //     newUserId: userProfile?._id,
+    //   });
+    // }
+
+    const handleNewMessage = ({
+      chatId,
+      message,
+      unreadCount,
+    }: {
+      chatId: string;
+      message: string;
+      unreadCount: number;
+    }) => {
+      console.log("new support messages", unreadCount, chatId, message);
+      dispatch(updateChatUnreadCount({ chatId, unreadCount }));
+    };
+
+    if (!socket) return;
+
+    socket.on("newSupportMessage", handleNewMessage);
+
+    return () => {
+      socket.off("newSupportMessage", handleNewMessage); // Cleanup correctly
+    };
   }, [socket, isConnected, userProfile]);
 
-  const socketConnectSpecificChat = ({ chatId }: { chatId: string }) => {
+  const socketConnectSpecificChat = async ({ chatId }: { chatId: string }) => {
     if (specificChatRef.current && userProfile) {
-      specificChatRef.current.emit("support-chat-connected", {
+      specificChatRef?.current.emit("support-chat-connected", {
         userId: userProfile?._id,
         chatId,
         userType: "support",
       });
+
+      if (socket) {
+        socket.emit("support-real-notification", {
+          chatId,
+          newUserId: userProfile?._id,
+        });
+      }
     }
+
+    if (!userProfile) return;
+
+    await handleUnreadMessage({ chatId, userId: userProfile._id });
   };
 
   useEffect(() => {
@@ -81,7 +118,7 @@ export const useSupLiveChatScreenHook = () => {
     setSelectChat(chatId);
   };
 
-  console.log("supportChats", supportChats);
+  // console.log("supportChats", supportChats);
 
   const handleSubmit = () => {
     if (message) {
@@ -111,7 +148,26 @@ export const useSupLiveChatScreenHook = () => {
     setMessage("");
   };
 
-  const handleSendMedias = ({ type, mediaSource }) => {};
+  const handleSendMedias = async ({ type, mediaSource }) => {
+    if (!userProfile && !selectChat) return;
+    console.log("----------------------");
+
+    const formData = new FormData();
+
+    formData.append("image", mediaSource);
+
+    formData.append("chatId", selectChat);
+    formData.append("sender", "supportteam");
+    formData.append("userId", userProfile?._id);
+    formData.append("type", type);
+
+    const resData = await handleSendImage(formData);
+
+    if (resData) {
+      type === "image" ? setImageSources(null) : setAudioSource(null);
+      setMessages((prev) => [...prev, resData]);
+    }
+  };
 
   return {
     supportChats,
@@ -124,5 +180,6 @@ export const useSupLiveChatScreenHook = () => {
     setMessage,
     message,
     messagesEndRef,
+    userProfile,
   };
 };

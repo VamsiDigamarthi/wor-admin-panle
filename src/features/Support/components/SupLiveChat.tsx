@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import SearchCard from "../../../SharedComponents/Search";
 import UserCard from "../../../SharedScreens/UserVerificationScreen/Components/UserCard";
 import { useSupLiveChatScreenHook } from "../hook/SupLiveChatScreen.hook";
@@ -5,6 +6,7 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import ChatMessage from "./ChatMessage";
 import EmptyMessageCard from "./EmptyMessageCard";
+import { RootState } from "../../../Redux/store";
 
 const SupLiveChat = () => {
   const {
@@ -18,8 +20,29 @@ const SupLiveChat = () => {
     setMessage,
     message,
     messagesEndRef,
+    userProfile,
   } = useSupLiveChatScreenHook();
-  console.log(messages);
+  // console.log("------------supportChats", supportChats);
+
+  const { unreadMessages } = useSelector(
+    (state: RootState) => state.unreadMessages
+  );
+
+  const getUnreadCount = (chatId: string) => {
+    // Fetch initial unread count from API response (supChat.participants)
+    const apiUnreadCount =
+      supportChats
+        ?.find((chat) => chat._id === chatId)
+        ?.participants?.find((p) => p.participantId === userProfile?._id)
+        ?.unreadCount || 0;
+
+    // Fetch real-time unread count from Redux store
+    const reduxUnreadCount =
+      unreadMessages.find((chat) => chat.chatId === chatId)?.unreadCount ?? 0;
+
+    // Return the maximum value to ensure correct unread count
+    return Math.max(apiUnreadCount, reduxUnreadCount);
+  };
 
   return (
     <div className="w-full rounded-md shadow-custom bg-white">
@@ -30,19 +53,22 @@ const SupLiveChat = () => {
           <div className="w-full h-calc[100%-80px] overflow-y-scroll">
             {supportChats?.length > 0 && (
               <>
-                {supportChats?.map((supChat, index) => (
-                  <UserCard
-                    key={index}
-                    name={supChat?.userData?.name}
-                    profilePic={supChat?.userData?.profilePic}
-                    userVerified={supChat?.userData?.userVerified}
-                    _id={supChat?._id}
-                    isChatScreen={true}
-                    passChatIdToParentComs={handleSelectSpecificChat}
-                    isSelected={selectChat === supChat._id}
-                    mobile={supChat?.userData?.mobile}
-                  />
-                ))}
+                {supportChats?.map((supChat, index) => {
+                  return (
+                    <UserCard
+                      key={index}
+                      name={supChat?.userData?.name}
+                      profilePic={supChat?.userData?.profilePic}
+                      userVerified={supChat?.userData?.userVerified}
+                      _id={supChat?._id}
+                      isChatScreen={true}
+                      passChatIdToParentComs={handleSelectSpecificChat}
+                      isSelected={selectChat === supChat._id}
+                      mobile={supChat?.userData?.mobile}
+                      unreadCount={getUnreadCount(supChat._id)} // Pass unread count here
+                    />
+                  );
+                })}
               </>
             )}
           </div>
