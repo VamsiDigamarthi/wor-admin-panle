@@ -5,6 +5,7 @@ import modalSlice from "./modalFeatureSlice";
 import worUser from "../features/user/redux/worUserSlice";
 
 import supportChatsList from "../features/Support/redux/supportChatSlice";
+import unreadMessages from "../features/Support/redux/unreadMessages";
 
 const RootReducer = {
   authToken,
@@ -12,5 +13,6 @@ const RootReducer = {
   worUser,
   modalSlice,
   supportChatsList,
+  unreadMessages,
 };
 export default RootReducer;

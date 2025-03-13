@@ -68,13 +68,37 @@ const userDashboardSlice = createSlice({
         fetchWorUsers.fulfilled,
         (state, action: PayloadAction<WorUser[]>) => {
           state.worUsers = action.payload;
-          state.worUser =
-            action.payload?.filter(
-              (user) => user.userVerified === false
-            )?.[0] ?? {};
+
+          const storedUser = localStorage.getItem("worUser");
+          const parsedUser: WorUser | null = storedUser
+            ? JSON.parse(storedUser)
+            : null;
+          // console.log("parsedUser", parsedUser);
+
+          if (parsedUser) {
+            // Try to find the latest version of the stored user in the fetched data
+            const updatedUser = action.payload.find(
+              (user) => user._id === parsedUser._id
+            );
+            // console.log("updatedUser", updatedUser);
+
+            if (updatedUser) {
+              // If the user is found in the updated data, update the state with the latest user
+              state.worUser = updatedUser;
+            } else {
+              // If the user is not in the updated data, fall back to the local storage user
+              state.worUser = parsedUser;
+            }
+          } else {
+            // Set the first unverified user from the fetched list
+            state.worUser =
+              action.payload.find((user) => !user.userVerified) ?? null;
+          }
+
           state.loading = false;
         }
       )
+
       .addCase(fetchWorUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to fetch wor users";

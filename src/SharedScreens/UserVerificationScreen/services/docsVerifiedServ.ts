@@ -160,7 +160,7 @@ export const fetchRcDataApi = async ({
     }
     // errorMsgApi("failde to upload RC Details to Wor Server");
   } catch (error) {
-    // console.log(error?.response?.data?.message, "------------------");
+    console.log(error?.response?.data?.message, "------------------");
 
     errorMsgApi(error?.response?.data?.message || "failde to upload RC Number");
     return false;
@@ -189,7 +189,7 @@ export const fetchDrivingLinces = async ({
   userId: string | null;
 }) => {
   try {
-    console.log(licNume);
+    console.log("---", licNume);
     console.log(dob);
 
     const response = await axios.post(
@@ -212,7 +212,9 @@ export const fetchDrivingLinces = async ({
 
     return true;
   } catch (error) {
-    errorMsgApi(error?.response?.data?.message || "failde to upload RC Number");
+    errorMsgApi(
+      error?.response?.data?.message || "failde to upload DL Details"
+    );
     return false;
   }
 };

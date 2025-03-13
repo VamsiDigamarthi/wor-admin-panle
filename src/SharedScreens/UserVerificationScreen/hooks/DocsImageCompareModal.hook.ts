@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../Redux/store";
 import { useCallback, useEffect, useState } from "react";
-import { handleRejectDocsApi } from "../services/docsVerifiedServ";
+import {
+  fetchDrivingLinces,
+  fetchRcDataApi,
+  handleRejectDocsApi,
+} from "../services/docsVerifiedServ";
 import { openCloseModalFunc } from "../../../Redux/modalFeatureSlice";
 import {
   fetchWorUsers,
@@ -15,7 +19,12 @@ export const useDocsImageCompareModalHook = ({
 }) => {
   const { worUser } = useSelector((state: RootState) => state.worUser);
 
+  const [dlChangDataModal, setDlChangeDataModal] = useState(false);
+  const [dob, setDob] = useState(worUser?.docsNumber?.dob ?? "");
+
   const dispatch: AppDispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [docImage, setDocImage] = useState<{
     frontImage: string | null;
@@ -33,10 +42,20 @@ export const useDocsImageCompareModalHook = ({
     numberImage: "",
   });
 
-  console.log(
-    "worUser?.services?.[0]?.rcBackImage",
-    worUser?.services?.[0]?.rcBackImage
-  );
+  // console.log(
+  //   "worUser?.services?.[0]?.rcBackImage",
+  //   worUser?.services?.[0]?.rcBackImage
+  // );
+
+  const returnDcsType = (lable: string | null) => {
+    return lable === "Aadhar / Pan Image"
+      ? "aadhar"
+      : lable === "Driving License"
+      ? "dl"
+      : lable === "Vehicle Image"
+      ? "Vehicle Image"
+      : "RC";
+  };
 
   const handleFilterImages = useCallback(() => {
     switch (lable) {
@@ -89,15 +108,7 @@ export const useDocsImageCompareModalHook = ({
       return;
     }
 
-    const docsType =
-      lable === "Aadhar / Pan Image"
-        ? "aadhar"
-        : lable === "Driving License"
-        ? "dl"
-        : lable === "Vehicle Image"
-        ? "Vehicle Image"
-        : "RC";
-
+    const docsType = returnDcsType(lable);
     const data = await handleRejectDocsApi({
       id: worUser?._id,
       docsType,
@@ -128,15 +139,7 @@ export const useDocsImageCompareModalHook = ({
       return;
     }
 
-    const docsType =
-      lable === "Aadhar / Pan Image"
-        ? "aadhar"
-        : lable === "Driving License"
-        ? "dl"
-        : lable === "Vehicle Image"
-        ? "Vehicle Image"
-        : "RC";
-
+    const docsType = returnDcsType(lable);
     const data = await handleRejectDocsApi({
       id: worUser?._id,
       docsType,
@@ -159,9 +162,62 @@ export const useDocsImageCompareModalHook = ({
     }
   };
 
+  const fetchSurePassData = async () => {
+    const docsType = returnDcsType(lable);
+    if (docsType === "dl") {
+      setDlChangeDataModal(true);
+    } else if (docsType === "RC") {
+      console.log("worUser", worUser);
+
+      if (
+        worUser &&
+        !worUser?.services?.[0]?.ownerName &&
+        worUser?.services?.[0]?.rcVerificationStatuc === "pending"
+      ) {
+        setIsLoading(true);
+        const rcDetailsResponse = await fetchRcDataApi({
+          rcNumber: worUser?.services?.[0]?.rcNumber,
+          userId: worUser?._id ?? null,
+        });
+        setIsLoading(false);
+
+        if (rcDetailsResponse) {
+          dispatch(fetchWorUsers());
+        }
+      }
+    }
+  };
+
+  const fetchDlSurePassData = async () => {
+    console.log("---", worUser?.docsNumber.newLicenNumber, dob);
+    if (
+      worUser &&
+      !worUser?.licenseCardDetails?.name &&
+      worUser?.adminDocsVerified?.adminLicenVerified === "pending"
+    ) {
+      setIsLoading(true);
+      const dlRes = await fetchDrivingLinces({
+        licNume: worUser?.docsNumber.newLicenNumber,
+        dob: dob,
+        userId: worUser?._id,
+      });
+      setIsLoading(false);
+      if (dlRes) {
+        setDlChangeDataModal(false);
+        dispatch(fetchWorUsers());
+      }
+    }
+  };
+
   return {
     docImage,
     handleAcceptTheDocs,
     handleRejectDocs,
+    fetchSurePassData,
+    dlChangDataModal,
+    setDob,
+    dob,
+    fetchDlSurePassData,
+    isLoading,
   };
 };

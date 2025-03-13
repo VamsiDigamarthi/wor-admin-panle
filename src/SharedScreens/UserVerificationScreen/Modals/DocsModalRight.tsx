@@ -9,8 +9,10 @@ type DocsModalRightType = {
 const DocsModalRight: FC<DocsModalRightType> = ({ lable }) => {
   const { docsNumber, worUser } = useDocsModalRightHook({ lable });
 
-  const renderDetail = ({ label, value }: DetailsCardType) => {
-    return value ? <DetailsCard label={label} value={value} /> : null;
+  const renderDetail = ({ label, value, index }: DetailsCardType) => {
+    return value ? (
+      <DetailsCard key={index} label={label} value={value} />
+    ) : null;
   };
 
   const aadharCardDetails = worUser?.aadharCardDetails;
@@ -80,8 +82,8 @@ const DocsModalRight: FC<DocsModalRightType> = ({ lable }) => {
       </div>
       <div className="w-full h-[2px] bg-red-200 mb-4" />
       <div className="w-full h-[calc(100%-30px)] overflow-y-scroll flex flex-col gap-1">
-        {detailsToShow.map((detail) =>
-          renderDetail({ label: detail.label, value: detail.value })
+        {detailsToShow.map((detail, index) =>
+          renderDetail({ label: detail.label, value: detail.value, index })
         )}
       </div>
     </div>

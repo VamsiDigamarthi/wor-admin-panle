@@ -16,6 +16,7 @@ type UserCardType = {
   passChatIdToParentComs?: (chatId: string) => void;
   isSelected?: boolean;
   mobile?: string;
+  unreadCount?: number;
 };
 
 const UserCard: FC<UserCardType> = ({
@@ -28,6 +29,7 @@ const UserCard: FC<UserCardType> = ({
   passChatIdToParentComs,
   isSelected = false,
   mobile,
+  unreadCount = 0,
 }) => {
   const dispatch: AppDispatch = useDispatch();
 
@@ -41,6 +43,7 @@ const UserCard: FC<UserCardType> = ({
     }
     const user = worUsers?.find((user) => user._id === _id);
     if (user) {
+      localStorage.setItem("worUser", JSON.stringify(user));
       dispatch(setWorUser(user));
     }
   };
@@ -56,7 +59,12 @@ const UserCard: FC<UserCardType> = ({
       }}
       className="w-full flex justify-between items-center py-2 cursor-pointer"
     >
-      <UserImage name={name} profilePic={profilePic} mobile={mobile} />
+      <UserImage
+        name={name}
+        profilePic={profilePic}
+        mobile={mobile}
+        unreadCount={unreadCount}
+      />
       <Status
         height="30px"
         roundedCorners={true}

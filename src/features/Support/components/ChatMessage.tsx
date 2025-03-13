@@ -1,3 +1,5 @@
+import { useRef, useState } from "react";
+import { CircleStop, Play } from "lucide-react";
 import { imageUrl } from "../../../Core/url";
 
 type ChatMessageProps = {
@@ -20,7 +22,7 @@ const COLORS = {
 };
 
 const ChatMessage: React.FC<ChatMessageProps> = ({
-  isSentByCurrentUser,
+  // isSentByCurrentUser,
   image,
   message,
   type,
@@ -29,7 +31,23 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   const isSupportTeam = sender === "supportteam";
   const messageStyles = isSupportTeam ? COLORS.support : COLORS.captain;
 
-  console.log(`${imageUrl}/${image}`);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleAudioPlayback = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const handleStopPlayback = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <div
@@ -45,6 +63,22 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
             alt="chat-image"
             src={`${imageUrl}/${image}`}
           />
+        </div>
+      )}
+      {type === "audio" && (
+        <div className="w-[250px] h-[50px] bg-red-200 rounded-md flex justify-between items-center px-2">
+          <audio
+            ref={audioRef}
+            src={`${imageUrl}/${message}`}
+            onEnded={() => setIsPlaying(false)}
+          />
+          <span className="text-base font-semibold">Audio File</span>
+          <button
+            onClick={isPlaying ? handleStopPlayback : handleAudioPlayback}
+            className="bg-blue-500 text-white p-2 rounded-lg"
+          >
+            {isPlaying ? <CircleStop size={30} /> : <Play size={30} />}
+          </button>
         </div>
       )}
       {type === "text" && (

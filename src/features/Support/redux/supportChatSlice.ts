@@ -6,7 +6,7 @@ export type SupportChat = {
     {
       participantId: string;
       participantModal: "User" | "AdminUsers";
-      unreacCount: number;
+      unreadCount: number;
       _id: string;
     }
   ];
