@@ -24,7 +24,7 @@ const LogoutModal = () => {
   };
 
   return (
-    <ModalLayout title="" width="30%" height="35%">
+    <ModalLayout title="" width="30%" height="40%">
       <div className="flex flex-col gap-6 items-center justify-center">
         <p>Are you sure want to logout</p>
         <div className="flex justify-center items-center gap-4">

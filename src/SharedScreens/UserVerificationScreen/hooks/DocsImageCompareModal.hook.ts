@@ -3,6 +3,7 @@ import { AppDispatch, RootState } from "../../../Redux/store";
 import { useCallback, useEffect, useState } from "react";
 import {
   fetchDrivingLinces,
+  fetchPanDetailsFromsurepass,
   fetchRcDataApi,
   handleRejectDocsApi,
 } from "../services/docsVerifiedServ";
@@ -118,19 +119,6 @@ export const useDocsImageCompareModalHook = ({
       //
       dispatch(fetchWorUsers());
       dispatch(openCloseModalFunc());
-
-      if (docsType === "aadhar") {
-        worUser.adminDocsVerified.adminAadharVerified = "verified";
-      } else if (docsType === "dl") {
-        worUser.adminDocsVerified.adminLicenVerified = "verified";
-      } else {
-        if (worUser?.services && worUser.services[0]) {
-          worUser.services[0].rcVerificationStatuc = "verified";
-        }
-        // worUser.services[0].rcVerificationStatuc = "verified";
-      }
-
-      dispatch(setWorUser(worUser));
     }
   };
 
@@ -149,17 +137,6 @@ export const useDocsImageCompareModalHook = ({
     if (data) {
       dispatch(fetchWorUsers());
       dispatch(openCloseModalFunc());
-
-      if (docsType === "aadhar") {
-        worUser.adminDocsVerified.adminAadharVerified = "rejected";
-      } else if (docsType === "dl") {
-        worUser.adminDocsVerified.adminLicenVerified = "rejected";
-      } else {
-        if (worUser?.services && worUser.services?.[0]) {
-          worUser.services[0].rcVerificationStatuc = "rejected";
-        }
-      }
-      dispatch(setWorUser(worUser));
     }
   };
 
@@ -186,11 +163,35 @@ export const useDocsImageCompareModalHook = ({
           dispatch(fetchWorUsers());
         }
       }
+    } else {
+      // fetch pan details
+      worUser?.docsNumber?.newAadharNumber?.length === 10 &&
+        fetcPanDetailsFromSurepass({
+          panNumber: worUser?.docsNumber?.newAadharNumber,
+        });
+    }
+  };
+
+  // PAN DETAILS FETCH
+  const fetcPanDetailsFromSurepass = async ({
+    panNumber,
+  }: {
+    panNumber: string;
+  }) => {
+    setIsLoading(true);
+
+    const data = await fetchPanDetailsFromsurepass({
+      panNumber: panNumber,
+      userId: worUser?._id ?? "",
+    });
+
+    setIsLoading(false);
+    if (data) {
+      dispatch(fetchWorUsers());
     }
   };
 
   const fetchDlSurePassData = async () => {
-    console.log("---", worUser?.docsNumber.newLicenNumber, dob);
     if (
       worUser &&
       !worUser?.licenseCardDetails?.name &&

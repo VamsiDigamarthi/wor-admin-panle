@@ -70,7 +70,12 @@ const UserDetials: FC<UserDetialsType> = ({
           </>
         </div>
       </div>
-      <UseNameCard mobile={mobile} email={email} name={name} />
+      <UseNameCard
+        mobile={mobile}
+        email={email}
+        name={name}
+        dob={worUser?.aadharCardDetails?.dob ?? ""}
+      />
     </div>
   );
 };

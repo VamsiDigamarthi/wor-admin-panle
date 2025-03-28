@@ -240,3 +240,46 @@ export const captainVerificationApi = async ({
     return false;
   }
 };
+
+const panDataUploadToOwnServer = async ({ data, userId }) => {
+  try {
+    await API.patch(`/captain/pan-updated/${userId}`, { data });
+    return true;
+  } catch (error) {
+    console.log("Error updated docs status", error);
+    return false;
+  }
+};
+
+export const fetchPanDetailsFromsurepass = async ({
+  panNumber,
+  userId,
+}: {
+  panNumber: string;
+  userId: string | null;
+}) => {
+  try {
+    const response = await axios.post(
+      "https://kyc-api.surepass.io/api/v1/pan/pan",
+      {
+        id_number: panNumber?.toUpperCase(),
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${surePassApiKay}`,
+        },
+      }
+    );
+    console.log("response", response.data?.data);
+
+    await panDataUploadToOwnServer({ data: response.data?.data, userId });
+
+    return true;
+  } catch (error) {
+    errorMsgApi(
+      error?.response?.data?.message || "failde to upload DL Details"
+    );
+    return false;
+  }
+};
