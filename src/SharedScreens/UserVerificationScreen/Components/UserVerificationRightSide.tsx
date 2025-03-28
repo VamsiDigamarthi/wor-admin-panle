@@ -169,13 +169,6 @@ const UserVerificationRightSide = () => {
             }
           />
         </div>
-
-        <h3 className="font-semibold text-lg">Audit Log</h3>
-        <div className="w-full flex flex-col gap-1">
-          <p>Profile Submittion on Jan 15, 2025</p>
-          <p>Profile Submittion on Jan 15, 2025</p>
-          <p>Profile Submittion on Jan 15, 2025</p>
-        </div>
       </div>
     </div>
   );
