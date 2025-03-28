@@ -18,18 +18,28 @@ const DocsModalRight: FC<DocsModalRightType> = ({ lable }) => {
   const aadharCardDetails = worUser?.aadharCardDetails;
   const rcDetails = worUser?.services?.[0];
   const licenseDetails = worUser?.licenseCardDetails;
+  const panDetails = worUser?.panCardDetails;
 
   const fieldsByLabel: {
     [key: string]: { label: string; value: string | null }[];
   } = {
     "Aadhar / Pan Image": [
-      { label: "Name", value: aadharCardDetails?.fullName ?? null },
+      {
+        label: "Name",
+        value: aadharCardDetails?.fullName
+          ? aadharCardDetails?.fullName
+          : panDetails
+          ? panDetails?.name
+          : null,
+      },
       { label: "DOB", value: aadharCardDetails?.dob ?? null },
       { label: "Gender", value: aadharCardDetails?.gender ?? null },
       {
         label: "Aadhar Number",
         value: aadharCardDetails?.aadhaarNumber ?? null,
       },
+      { label: "Pan Numer", value: panDetails ? panDetails?.pan : null },
+
       { label: "Care-Of", value: aadharCardDetails?.careOf ?? null },
       { label: "Country", value: aadharCardDetails?.address?.country ?? null },
       { label: "Dist", value: aadharCardDetails?.address?.dist ?? null },

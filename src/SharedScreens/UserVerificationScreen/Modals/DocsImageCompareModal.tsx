@@ -105,12 +105,21 @@ const DocsImageCompareModal: FC<DocsImageCompareModalType> = ({ lable }) => {
         </div>
         {!displayAcceptRejectBtns && (
           <div className="absolute flex gap-4 items-center bottom-16 right-24">
-            <button
-              onClick={fetchSurePassData}
-              className="text-white bg-lime-400 w-[130px] h-[40px] rounded-md"
-            >
-              {isLoading ? <BeatLoader color="#fff" size={10} /> : "Sure Pass"}
-            </button>
+            {worUser?.docsNumber?.newAadharNumber?.length === 12 &&
+            lable === "Aadhar / Pan Image" ? (
+              <></>
+            ) : (
+              <button
+                onClick={fetchSurePassData}
+                className="text-white bg-lime-400 w-[130px] h-[40px] rounded-md"
+              >
+                {isLoading ? (
+                  <BeatLoader color="#fff" size={10} />
+                ) : (
+                  "Sure Pass"
+                )}
+              </button>
+            )}
             <button
               onClick={handleRejectDocs}
               className="text-white bg-red-500 w-[130px] h-[40px] rounded-md"
@@ -126,6 +135,7 @@ const DocsImageCompareModal: FC<DocsImageCompareModalType> = ({ lable }) => {
           </div>
         )}
       </ModalLayout>
+      {/* dl data fetch */}
       {dlChangDataModal && (
         <ModalLayout title="Check DL Details " width="50%" height="40%">
           <div className="flex flex-col gap-4">

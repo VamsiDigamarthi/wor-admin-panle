@@ -100,8 +100,8 @@ export interface WorUser {
   } | null;
 
   panCardDetails: {
-    fullName: string | null;
-    panNumber: string | null;
+    name: string | null;
+    pan: string | null;
   };
 
   licenseCardDetails: {

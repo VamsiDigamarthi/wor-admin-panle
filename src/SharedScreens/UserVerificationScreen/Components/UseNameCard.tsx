@@ -4,9 +4,10 @@ type UseNameCardType = {
   mobile: string | null;
   name: string | null;
   email: string | null;
+  dob: string | null;
 };
 
-const UseNameCard: FC<UseNameCardType> = ({ mobile, email, name }) => {
+const UseNameCard: FC<UseNameCardType> = ({ mobile, email, name, dob }) => {
   return (
     <>
       <div className="w-full flex justify-between items-center">
@@ -16,7 +17,7 @@ const UseNameCard: FC<UseNameCardType> = ({ mobile, email, name }) => {
         </div>
         <div className="w-1/2 flex flex-col gap-1">
           <p className="text-sm text-gray-500">Date of Birth</p>
-          <h2 className="text-lg font-[600]">Vamsi</h2>
+          <h2 className="text-lg font-[600]">{dob}</h2>
         </div>
       </div>
       <div className="w-full flex justify-between items-center border-b border-b-gray-200 mb-3">
