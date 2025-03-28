@@ -55,7 +55,7 @@ export const useLogicScreenHook = () => {
       if (role === "admin") {
         navigate("/admin-dashboard");
       } else if (role === "manager") {
-        navigate("/manager-dashboard");
+        navigate("/user-verification");
       } else if (role === "superadmin") {
         navigate("/user-verification");
       } else if (role === "support") {

@@ -116,6 +116,7 @@ export const useDocsImageCompareModalHook = ({
     });
     if (data) {
       //
+      dispatch(fetchWorUsers());
       dispatch(openCloseModalFunc());
 
       if (docsType === "aadhar") {
