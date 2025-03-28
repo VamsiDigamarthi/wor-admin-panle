@@ -144,9 +144,6 @@ const DocsImageCompareModal: FC<DocsImageCompareModalType> = ({ lable }) => {
                   className="border border-gray-400"
                   onChange={(event) => setDob(event.target.value)}
                 />
-                {/* <p className="text-lg font-semibold">
-                {worUser?.docsNumber?.dob}
-                </p> */}
               </div>
             </div>
             <Button text="Submit" onClick={fetchDlSurePassData} />
