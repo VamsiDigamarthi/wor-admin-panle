@@ -30,7 +30,7 @@ const ModalLayout: FC<ModalTemplateProps> = ({
 
   return (
     <div
-      className="w-full h-full absolute top-0 left-0 flex justify-center items-center"
+      className="w-full h-full absolute top-0 left-0 flex justify-center items-center z-50"
       style={{ backgroundColor: "rgba(0, 0, 0, 0.155)" }}
     >
       <div

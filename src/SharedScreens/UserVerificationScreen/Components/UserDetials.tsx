@@ -51,23 +51,23 @@ const UserDetials: FC<UserDetialsType> = ({
                 cursorDisable={true}
               />
             ) : (
-              <StatucChangBtn
-                onClick={handleCaptainVerified}
-                title="Approve"
-                bgColor="#22c55e"
-                iconType="tick"
-              />
+              <>
+                {worUser?.adminDocsVerified?.adminAadharVerified ===
+                  "verified" &&
+                  worUser?.adminDocsVerified?.adminLicenVerified ===
+                    "verified" &&
+                  worUser?.services?.[0]?.rcVerificationStatuc ===
+                    "verified" && (
+                    <StatucChangBtn
+                      onClick={handleCaptainVerified}
+                      title="Approve"
+                      bgColor="#22c55e"
+                      iconType="tick"
+                    />
+                  )}
+              </>
             )}
           </>
-
-          {/* <StatucChangBtn title="Reject" bgColor="#fe4444" iconType="cross" />
-          <StatucChangBtn
-            title="Escalate"
-            bgColor="#fff"
-            iconType="upArrow"
-            isApplyBorder={true}
-            textColor="#000"
-          /> */}
         </div>
       </div>
       <UseNameCard mobile={mobile} email={email} name={name} />

@@ -18,6 +18,7 @@ import MonitoringTeamScreen from "./features/Monitoring/screens/MonitoringTeamSc
 import RealTimeLiveTracking from "./features/Monitoring/screens/RealTimeLiveTracking";
 import SuperAdminDashboard from "./features/superadmin/screens/SuperAdminDashboard";
 import NotAuthorizedScreen from "./SharedScreens/NotAuthorizedScreen/NotAuthorizedScreen";
+import ServicesVerificationScreen from "./SharedScreens/ServicesVerification/screens/ServicesVerificationScreen";
 
 const App = () => {
   return (
@@ -44,6 +45,10 @@ const App = () => {
             <Route
               path="/user-verification"
               element={<UserVerificationScreen />}
+            />
+            <Route
+              path="/service-verification"
+              element={<ServicesVerificationScreen />}
             />
             <Route path="/PaymentIssuse" element={<PaymentIssuseScreen />} />
             <Route path="/Notification" element={<NotificationScreen />} />
@@ -84,7 +89,7 @@ const App = () => {
             />
           </Route>
         </Route>
-        <Route path="/not-authorized" element={<NotAuthorizedScreen />} />
+        {/* <Route path="/not-authorized" element={<NotAuthorizedScreen />} /> */}
       </Routes>
     </div>
   );

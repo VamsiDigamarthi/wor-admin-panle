@@ -213,6 +213,9 @@ export const fetchDrivingLinces = async ({
     return true;
   } catch (error) {
     console.log(error.response?.data?.message, "message");
+    if (error.response?.data?.message === "Verification Failed") {
+      errorMsgApi("failde to upload DL Details");
+    }
     errorMsgApi(
       error?.response?.data?.message || "failde to upload DL Details"
     );

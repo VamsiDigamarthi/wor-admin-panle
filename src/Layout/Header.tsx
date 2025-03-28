@@ -1,10 +1,12 @@
-import { BellDot, Settings } from "lucide-react";
+import { BellDot, LogOut, Settings } from "lucide-react";
 import logo from "../assets/images/wor-logo.png";
 import IconsLayout from "../SharedComponents/IconsLayout";
-import { useSelector } from "react-redux";
-import { RootState } from "../Redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../Redux/store";
 import { Roles } from "./ProtectedRoute";
 import { Link, useNavigate } from "react-router-dom";
+import { openCloseModalFunc } from "../Redux/modalFeatureSlice";
+import LogoutModal from "./LogoutModal";
 
 type HeaderItemTypes = {
   label: string;
@@ -16,6 +18,13 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { role } = useSelector((state: RootState) => state.authToken);
+
+  // const [openLogoutModal, setOpenLogoutModal] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+
+  const { isDisplayModal } = useSelector(
+    (state: RootState) => state.modalSlice
+  );
 
   const headerItems: HeaderItemTypes[] = [
     {
@@ -116,6 +125,7 @@ const Header = () => {
   const getUserRole = (): Roles => {
     return role || (localStorage.getItem("role") as Roles) || null;
   };
+
   const handleNavigateRoleBasedHomes = () => {
     const role = getUserRole();
 
@@ -135,50 +145,60 @@ const Header = () => {
     }
   };
 
+  const handleLogoutModal = () => {
+    dispatch(openCloseModalFunc());
+  };
+
   return (
-    <div className="w-full h-[105px] flex bg-white flex-col py-2">
-      <div className="w-full flex justify-between items-center border-b px-6 pb-2 border-iconBg">
-        <img
-          onClick={handleNavigateRoleBasedHomes}
-          className="w-[100px]"
-          src={logo}
-          alt="logo"
-        />
+    <>
+      <div className="w-full h-[105px] flex bg-white flex-col py-2">
+        <div className="w-full flex justify-between items-center border-b px-6 pb-2 border-iconBg">
+          <img
+            onClick={handleNavigateRoleBasedHomes}
+            className="w-[100px]"
+            src={logo}
+            alt="logo"
+          />
 
-        <div className="flex gap-4 items-center">
-          {/* Render only the items available for the current role */}
-          {headerItems?.map(
-            (item, index) =>
-              item.roles.includes(role) && (
-                <Link
-                  to={item.navigationTextByRole[role] || "#"} // Check navigation text based on role
-                  key={index}
-                  className="heading-title"
-                >
-                  {item.label}
-                </Link>
-              )
-          )}
+          <div className="flex gap-4 items-center">
+            {/* Render only the items available for the current role */}
+            {headerItems?.map(
+              (item, index) =>
+                item.roles.includes(role) && (
+                  <Link
+                    to={item.navigationTextByRole[role] || "#"} // Check navigation text based on role
+                    key={index}
+                    className="heading-title"
+                  >
+                    {item.label}
+                  </Link>
+                )
+            )}
 
-          {/* Icon items */}
-          <IconsLayout>
-            <Settings size={22} color="#69bff5" />
-          </IconsLayout>
-          <IconsLayout>
-            <BellDot size={22} color="#69bff5" />
-          </IconsLayout>
-          <IconsLayout>
-            <BellDot size={22} color="#69bff5" />
-          </IconsLayout>
+            {/* Icon items */}
+            <IconsLayout>
+              <Settings size={22} color="#69bff5" />
+            </IconsLayout>
+            <IconsLayout>
+              <BellDot size={22} color="#69bff5" />
+            </IconsLayout>
+            <IconsLayout>
+              <BellDot size={22} color="#69bff5" />
+            </IconsLayout>
+            <IconsLayout onPress={handleLogoutModal}>
+              <LogOut size={22} color="red" />
+            </IconsLayout>
+          </div>
+        </div>
+
+        {/* User Information */}
+        <div className="w-full flex justify-between items-center py-2 px-6">
+          <p className="text-sm font-[600]">User</p>
+          <p className="text-sm font-[600]">User@gmail.com</p>
         </div>
       </div>
-
-      {/* User Information */}
-      <div className="w-full flex justify-between items-center py-2 px-6">
-        <p className="text-sm font-[600]">User</p>
-        <p className="text-sm font-[600]">User@gmail.com</p>
-      </div>
-    </div>
+      {isDisplayModal && <LogoutModal />}
+    </>
   );
 };
 
