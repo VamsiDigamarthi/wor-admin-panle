@@ -60,6 +60,8 @@ export const useLogicScreenHook = () => {
         navigate("/user-verification");
       } else if (role === "support") {
         navigate("/support-dashboard");
+      } else if (role === "monitoring") {
+        navigate("/monitoring-team-dashboard");
       }
       //  else {
       //   navigate("/default-dashboard");

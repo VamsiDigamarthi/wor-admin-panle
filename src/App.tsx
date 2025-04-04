@@ -84,7 +84,7 @@ const App = () => {
               element={<MonitoringTeamScreen />}
             />
             <Route
-              path="/real-time-ride-tracking"
+              path="/monitoring-real-time-ride-tracking"
               element={<RealTimeLiveTracking />}
             />
           </Route>
