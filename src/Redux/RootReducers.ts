@@ -6,6 +6,7 @@ import worUser from "../features/user/redux/worUserSlice";
 
 import supportChatsList from "../features/Support/redux/supportChatSlice";
 import unreadMessages from "../features/Support/redux/unreadMessages";
+import activeorders from "../features/Monitoring/slice/activeOrderSlice";
 
 const RootReducer = {
   authToken,
@@ -14,5 +15,6 @@ const RootReducer = {
   modalSlice,
   supportChatsList,
   unreadMessages,
+  activeorders,
 };
 export default RootReducer;

@@ -92,34 +92,34 @@ const Header = () => {
       },
       roles: ["monitoring"],
     },
-    {
-      label: "Emergency Alert & SOS Handling",
-      navigationTextByRole: {
-        monitoring: "/monitoring-sos-handling",
-      },
-      roles: ["monitoring"],
-    },
-    {
-      label: "Ride History & Logs",
-      navigationTextByRole: {
-        monitoring: "/monitoring-ride-history",
-      },
-      roles: ["monitoring"],
-    },
-    {
-      label: "User & Ride Status",
-      navigationTextByRole: {
-        monitoring: "/monitoring-user-ride-status",
-      },
-      roles: ["monitoring"],
-    },
-    {
-      label: "Reports",
-      navigationTextByRole: {
-        monitoring: "/monitoring-reports",
-      },
-      roles: ["monitoring"],
-    },
+    // {
+    //   label: "Emergency Alert & SOS Handling",
+    //   navigationTextByRole: {
+    //     monitoring: "/monitoring-sos-handling",
+    //   },
+    //   roles: ["monitoring"],
+    // },
+    // {
+    //   label: "Ride History & Logs",
+    //   navigationTextByRole: {
+    //     monitoring: "/monitoring-ride-history",
+    //   },
+    //   roles: ["monitoring"],
+    // },
+    // {
+    //   label: "User & Ride Status",
+    //   navigationTextByRole: {
+    //     monitoring: "/monitoring-user-ride-status",
+    //   },
+    //   roles: ["monitoring"],
+    // },
+    // {
+    //   label: "Reports",
+    //   navigationTextByRole: {
+    //     monitoring: "/monitoring-reports",
+    //   },
+    //   roles: ["monitoring"],
+    // },
   ];
 
   const getUserRole = (): Roles => {
@@ -134,7 +134,7 @@ const Header = () => {
       admin: "/admin-dashboard",
       support: "/support-dashboard",
       manager: "/manager-dashboard",
-      monitoring: "/monitoring-dashboard",
+      monitoring: "/monitoring-team-dashboard",
       superadmin: "/superadmin-dashboard",
     };
     const roleBasedHomePage = roleBasedHomes[role];
