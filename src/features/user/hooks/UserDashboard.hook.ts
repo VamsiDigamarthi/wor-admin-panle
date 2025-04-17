@@ -1,12 +1,18 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchWorUsers, setVerifiedUsers } from "../redux/worUserSlice";
+import {
+  fetchWorUsers,
+  setVerifiedUsers,
+  setWorUsers,
+} from "../redux/worUserSlice";
 import { AppDispatch, RootState } from "../../../Redux/store";
 
 export const useUserDashboardHook = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const { worUsers } = useSelector((state: RootState) => state.worUser);
+  const { worUsers, allWorUser } = useSelector(
+    (state: RootState) => state.worUser
+  );
   const { userProfile } = useSelector((state: RootState) => state.profile);
   // const v = "";
 
@@ -37,5 +43,30 @@ export const useUserDashboardHook = () => {
     }
   }, [calculateUserApprovedCount, worUsers]);
 
-  // return { v };
+  const filterByText = (text: string) => {
+    if (text?.length <= 0) {
+      // dispatch(setFilterUser(notFilterData));
+    }
+
+    if (!text || !worUsers || !Array.isArray(worUsers)) return [];
+
+    const lowerText = text.toLowerCase();
+
+    const filtered = allWorUser?.filter((user) => {
+      const name = user.name?.toLowerCase() || "";
+      const email = user.email?.toLowerCase() || "";
+      const mobile = user.mobile?.toLowerCase() || "";
+
+      return (
+        name.includes(lowerText) ||
+        email.includes(lowerText) ||
+        mobile.includes(lowerText)
+      );
+    });
+
+    dispatch(setWorUsers(filtered));
+    // return filtered;
+  };
+
+  return { filterByText };
 };

@@ -6,6 +6,7 @@ interface UserDashboardState {
   worUsers: WorUser[];
   worUser: WorUser | null;
   loading: boolean;
+  allWorUser: WorUser[];
   error: string | null;
   verifiedUsers: {
     approvedUsers: number;
@@ -16,6 +17,7 @@ interface UserDashboardState {
 const initialState: UserDashboardState = {
   worUsers: [],
   worUser: null,
+  allWorUser: [],
   verifiedUsers: {
     approvedUsers: 0,
     pendingUsers: 0,
@@ -54,6 +56,10 @@ const userDashboardSlice = createSlice({
       state.verifiedUsers = action.payload;
     },
 
+    setWorUsers: (state, action: PayloadAction<WorUser[]>) => {
+      state.worUsers = action.payload;
+    },
+
     setWorUser: (state, action: PayloadAction<WorUser>) => {
       state.worUser = action.payload;
     },
@@ -68,6 +74,7 @@ const userDashboardSlice = createSlice({
         fetchWorUsers.fulfilled,
         (state, action: PayloadAction<WorUser[]>) => {
           state.worUsers = action.payload;
+          state.allWorUser = action.payload;
 
           const storedUser = localStorage.getItem("worUser");
           const parsedUser: WorUser | null = storedUser
@@ -106,6 +113,7 @@ const userDashboardSlice = createSlice({
   },
 });
 
-export const { setVerifiedUsers, setWorUser } = userDashboardSlice.actions;
+export const { setVerifiedUsers, setWorUser, setWorUsers } =
+  userDashboardSlice.actions;
 
 export default userDashboardSlice.reducer;

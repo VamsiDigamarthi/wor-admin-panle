@@ -2,12 +2,22 @@ import { useSelector } from "react-redux";
 import SearchCard from "../../../SharedComponents/Search";
 import Status from "../../../SharedComponents/Status";
 import { RootState } from "../../../Redux/store";
+import { FC } from "react";
 
-const StatusSearchCard = () => {
+type StatusSearchCardType = {
+  filterByText: (text: string) => void;
+};
+
+const StatusSearchCard: FC<StatusSearchCardType> = ({ filterByText }) => {
   const { verifiedUsers } = useSelector((state: RootState) => state.worUser);
   return (
     <div className="w-full flex justify-end items-center gap-4 border-b border-b-gray-300 py-2">
-      <SearchCard height="40px" width="330px" isApplyBorder={true} />
+      <SearchCard
+        filterByText={filterByText}
+        height="40px"
+        width="330px"
+        isApplyBorder={true}
+      />
       <Status
         text={`${verifiedUsers?.pendingUsers} Pending`}
         bgColor="#fef9c3"

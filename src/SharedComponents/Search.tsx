@@ -5,12 +5,14 @@ type SearchCardType = {
   isApplyBorder?: boolean;
   width?: string;
   height?: string;
+  filterByText: (text: string) => void;
 };
 
 const SearchCard: FC<SearchCardType> = ({
   isApplyBorder,
   width = "400px",
   height = "50px",
+  filterByText,
 }) => {
   return (
     <button
@@ -24,6 +26,7 @@ const SearchCard: FC<SearchCardType> = ({
         type="text"
         placeholder="Search Here...!"
         className="w-[94%] h-full px-1 outline-none border-none"
+        onChange={(e) => filterByText(e.target.value)}
       />
     </button>
   );

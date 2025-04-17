@@ -3,7 +3,7 @@ import DownloadPdf from "../../SharedComponents/DownloadPdf";
 import UserVerifyCard from "./Components/UserVerifyCard";
 
 const UserVerificationScreen = () => {
-  useUserDashboardHook();
+  const { filterByText } = useUserDashboardHook();
   // console.log(v);
   return (
     <div className="w-full flex flex-col gap-4 pb-6">
@@ -11,7 +11,7 @@ const UserVerificationScreen = () => {
         title="Employees Deails"
         subTitle="User Management employees list"
       />
-      <UserVerifyCard />
+      <UserVerifyCard filterByText={filterByText} />
     </div>
   );
 };
