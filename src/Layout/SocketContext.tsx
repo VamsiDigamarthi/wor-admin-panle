@@ -7,7 +7,7 @@ import React, {
   ReactNode,
 } from "react";
 import { io, Socket } from "socket.io-client";
-import { imageUrl } from "../Core/url";
+import { imageUrl, socketUrl } from "../Core/url";
 
 // Define types for the SocketContext
 interface SocketContextType {
@@ -38,7 +38,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   useEffect(() => {
     // Initialize the socket instance and store it in the ref
-    socketRef.current = io(imageUrl, {
+    socketRef.current = io(socketUrl, {
       transports: ["websocket"],
       reconnectionAttempts: 200, // Retry 200 times if disconnected
       reconnectionDelay: 1000, // Wait 1 second before trying to reconnect

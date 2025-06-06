@@ -29,7 +29,10 @@ const UserDetials: FC<UserDetialsType> = ({
     }
     const data = await captainVerificationApi({
       captainId: worUser?._id,
-      service: worUser?.services?.[0]?.serviceType,
+      service:
+        worUser?.services?.[0]?.fuelType?.toLowerCase() === "battery"
+          ? "scooty-lite"
+          : worUser?.services?.[0]?.serviceType,
     });
     if (data) {
       dispatch(fetchWorUsers());

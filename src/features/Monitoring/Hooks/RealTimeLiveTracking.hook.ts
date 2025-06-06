@@ -34,6 +34,8 @@ export const useRealTimeLiveTrackingHook = () => {
     orderId: string;
     coordinates: { lat: number; lng: number };
   }) => {
+    console.log("coordinatesData", coordinatesData);
+
     setTrackingData((prevData) => {
       const existingIndex = prevData.findIndex(
         (item) => item.orderId === coordinatesData.orderId

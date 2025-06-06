@@ -120,7 +120,7 @@ export const fetchRcDataApi = async ({
 
   try {
     const response = await axios.post(
-      "https://kyc-api.surepass.io/api/v1/rc/rc-full",
+      "https://kyc-api.surepass.app/api/v1/rc/rc-full",
       {
         id_number: rcNumber,
       },
@@ -193,7 +193,7 @@ export const fetchDrivingLinces = async ({
     console.log(dob);
 
     const response = await axios.post(
-      "https://kyc-api.surepass.io/api/v1/driving-license/driving-license",
+      "https://kyc-api.surepass.app/api/v1/driving-license/driving-license",
       {
         id_number: licNume,
         dob: dob,
@@ -260,7 +260,7 @@ export const fetchPanDetailsFromsurepass = async ({
 }) => {
   try {
     const response = await axios.post(
-      "https://kyc-api.surepass.io/api/v1/pan/pan",
+      "https://kyc-api.surepass.app/api/v1/pan/pan",
       {
         id_number: panNumber?.toUpperCase(),
       },
