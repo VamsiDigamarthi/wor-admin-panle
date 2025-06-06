@@ -2,10 +2,12 @@ import axios from "axios";
 import { errorMsgApi } from "./toast";
 
 export const API = axios.create({
-  baseURL: "https://womenrapido.nuhvin.com",
+  baseURL: "http://192.168.1.12:5051",
 });
 
-export const imageUrl = "https://womenrapido.nuhvin.com";
+export const imageUrl = "http://192.168.1.12:5051";
+
+export const socketUrl = "http://192.168.1.12:5051";
 
 const useGetUserToken = (): string | null => {
   return localStorage.getItem("token") || null;
